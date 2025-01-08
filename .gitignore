@@ -71,3 +71,8 @@ build/
 /run/*.dat
 /run/*stats*.json
 /run/*.pdf
+
+
+/instances
+/results
+.DS_Store
