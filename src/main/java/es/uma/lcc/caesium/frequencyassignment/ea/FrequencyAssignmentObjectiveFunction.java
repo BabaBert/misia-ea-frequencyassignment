@@ -16,10 +16,19 @@ public class FrequencyAssignmentObjectiveFunction extends PermutationalObjective
     private final FrequencyAssignmentProblem problem;
 
     public FrequencyAssignmentObjectiveFunction(FrequencyAssignmentProblem problem) {
-        super(problem.totalDemand()); // Ensure the genotype size matches the total demand
+        // Ensure the genotype size matches the total demand for frequencies
+        super(problem.totalDemand()); 
         this.problem = problem;
 
+        // Print total demand (number of genes required for the problem)
         System.out.println("Total demand (genes needed): " + problem.totalDemand());
+
+        // Adjust the possible frequency range for each gene if necessary
+        for (int i = 0; i < problem.numEmitters(); i++) {
+            // For each emitter, we can set an alphabet size for the frequency (if needed)
+            // Set a default value range here; adjust as per the problem's frequency bounds
+            setAlphabetSize(i, problem.maxFrequency()); // Example, adjust as necessary
+        }
     }
 
     @Override
@@ -53,7 +62,7 @@ public class FrequencyAssignmentObjectiveFunction extends PermutationalObjective
         Map<String, Set<Integer>> assignment = genotype2map(g);
 
         if (!problem.isFeasible(assignment)) {
-            return 10 * problem.getMaxFrequencySpan();
+            return problem.maxFrequency(); // Penalize infeasible solutions
         }
 
         double span = FrequencyAssignmentProblem.frequencySpan(assignment);
