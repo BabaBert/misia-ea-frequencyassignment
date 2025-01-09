@@ -35,8 +35,8 @@ public class RunEA4FAP {
 	 *                               formatted
 	 */
 	public static void main(String[] args) throws FileNotFoundException, JsonException {
-		if (args.length < 3) {
-			System.out.println("Parameters: <algorithm-configuration> <problem-data> <objective-function>");
+		if (args.length < 2) {
+			System.out.println("Parameters: <algorithm-configuration> <problem-data>");
 			System.exit(1);
 		}
 
@@ -51,8 +51,8 @@ public class RunEA4FAP {
 
 		FrequencyAssignmentProblem fap = new FrequencyAssignmentProblem(args[1] + ".fap");
 		System.out.println(fap);
-		DiscreteObjectiveFunction obj = new FrequencyAssignmentObjectiveFunction(fap);
 
+		DiscreteObjectiveFunction obj = new ObjectiveFunction(fap);
 		myEA.setObjectiveFunction(obj);
 		myEA.getStatistics().setDiversityMeasure(new EntropyDiversity());
 
@@ -66,7 +66,7 @@ public class RunEA4FAP {
 		}
         String problemData = args[1].substring(args[1].lastIndexOf('/') + 1);
 
-		PrintWriter file = new PrintWriter(args[0] + "-stats-" + problemData + ".json");
+		PrintWriter file = new PrintWriter("results/" + args[0] + "-stats-" + problemData + ".json");
 		file.print(myEA.getStatistics().toJSON().toJson());
 		file.close();
 	}
