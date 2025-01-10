@@ -66,7 +66,8 @@ public class RunEA4FAP {
 		}
         String problemData = args[1].substring(args[1].lastIndexOf('/') + 1);
 
-		PrintWriter file = new PrintWriter("results/" + args[0] + "-stats-" + problemData + ".json");
+        String algorithmConfig = args[0].substring(args[0].lastIndexOf('/') + 1);
+        PrintWriter file = new PrintWriter("results/" + algorithmConfig + "-stats-" + problemData + ".json");
 		file.print(myEA.getStatistics().toJSON().toJson());
 		file.close();
 	}
